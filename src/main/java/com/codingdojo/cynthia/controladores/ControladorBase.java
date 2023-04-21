@@ -49,7 +49,12 @@ public class ControladorBase {
 		return "<h1>Hola "+name+" "+last_name+"</h1>";
 	}
 	
-	@GetMapping("/hello/{nombre}") // /hello/Elena
+	/*
+	 localhost:8080/hello/Juana
+	 name = "Juana"
+	 return "<h1>Hola"+name+"</h1>" -> "<h1>Hola Juana</h1>"
+	 */
+	@GetMapping("/hello/{nombre}")
 	public String helloNombre(@PathVariable("nombre") String name) {
 		return "<h1>Hola "+name+"</h1>";
 	}
@@ -59,4 +64,24 @@ public class ControladorBase {
 									 @PathVariable("apellido") String last_name) {
 		return "<h1>Hola "+name+" "+last_name+"</h1>";
 	}
+	
+	/*
+	 localhost:8080/repeat/100/hola
+	 num = 100
+	 palabra1 = "hola"
+	 i = 0 - 99
+	 respuesta = ""
+	 */
+	@GetMapping("/repeat/{repetir}/{palabra}")
+    public String repeticion(@PathVariable("repetir")Integer num,
+    							 @PathVariable("palabra") String palabra1) {
+        int i=0;
+        String respuesta = "";
+        while(i<num) {
+            respuesta += "\n"+palabra1;
+            i++; 
+        }
+        return respuesta;
+    }
+
 }
