@@ -11,6 +11,32 @@
 <body>
 	<div class="container">
 		<h1>¡Bienvenid@ ${username} a tu Dashboard! </h1>
+		<a href="/new" class="btn btn-success">Agregar Usuario</a>
+		<table class="table table-hover">
+			<thead>
+				<tr>	
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>Email</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- usuarios = LIST{obj(elena), obj(juana), obj(pedro)
+					usuario = obj(elena)
+					usuario = obj(juana)
+					usuario = obj(pedro)
+				 -->
+				<c:forEach items="${usuarios}" var="usuario">
+					<tr>
+						<td>${usuario.firstName}</td>
+						<td>${usuario.lastName}</td>
+						<td>${usuario.email}</td>
+						<td></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>

@@ -1,17 +1,29 @@
 package com.codingdojo.cynthia.controladores;
 
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.codingdojo.cynthia.modelos.Usuario;
+import com.codingdojo.cynthia.servicios.Servicios;
+
 @Controller //Regresar un JSP
 public class ControladorUsuarios {
+	
+	@Autowired
+	private Servicios servicio;
 	
 	@GetMapping("/home")
 	public String home() {
@@ -57,7 +69,13 @@ public class ControladorUsuarios {
 	
 	//Muestra dashboard
 	@GetMapping("/dashboard") 
-	public String dashboard() {
+	public String dashboard(Model model) {
+		
+		//Una lista de todos los usuarios
+		List<Usuario> usuarios = servicio.findUsuarios();
+		//model.addAttribute("usuarios", usuario);
+		model.addAttribute("usuarios", usuarios);
+		
 		return "dashboard.jsp";
 	}
 	
@@ -82,6 +100,24 @@ public class ControladorUsuarios {
 		session.setAttribute("username", nombre); //(variable, valor)
 		
 		return "redirect:/dashboard";
+		
+	}
+	
+	@GetMapping("/new")
+	public String newUser(@ModelAttribute("usuario") Usuario usuario) {
+		return "new.jsp";
+	}
+	
+	@PostMapping("/create") //@Valid me permite validar la info del objeto usuario
+	public String createUser(@Valid @ModelAttribute("usuario") Usuario usuario,
+							 BindingResult result /*Encargado de mensajes de valid*/) {
+		
+		if(result.hasErrors()) {
+			return "new.jsp";
+		}else {
+			servicio.saveUsuario(usuario);
+			return "redirect:/dashboard";
+		}
 		
 	}
 	
