@@ -26,12 +26,13 @@ public class Servicios {
 	
 	//Me regresa un usuario en base a su ID
 	public Usuario findUsuario(Long id) {
-		return repoUsuarios.findById(id).orElse(null);
+		//SELECT * FROM usuarios WHERE id = <id>
+		return repoUsuarios.findById(id).orElse(null); //Me regresa un objeto Usuario
 	}
 	
 	//Borrar usuario en base a su ID
 	public void deleteUsuario(Long id) {
-		repoUsuarios.deleteById(id);
+		repoUsuarios.deleteById(id); //DELETE FROM usuario WHERE id = <id>
 	}
 	
 }

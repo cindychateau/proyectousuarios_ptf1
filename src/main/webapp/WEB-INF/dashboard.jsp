@@ -32,7 +32,15 @@
 						<td>${usuario.firstName}</td>
 						<td>${usuario.lastName}</td>
 						<td>${usuario.email}</td>
-						<td></td>
+						<td>
+							<a href="/mostrar/${usuario.id}" class="btn btn-info">Mostrar</a>
+							<form action="/borrar/${usuario.id}" method="post">
+								<!-- Sobre escribimos el method del formulario -->
+								<input type="hidden" name="_method" value="DELETE">
+								<input type="submit" value="Borrar" class="btn btn-danger" >
+							</form>
+							<a href="/editar/${usuario.id}" class="btn btn-warning">Editar</a>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>

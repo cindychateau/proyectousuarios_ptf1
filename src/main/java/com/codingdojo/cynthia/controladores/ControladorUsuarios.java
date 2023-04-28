@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -120,5 +122,50 @@ public class ControladorUsuarios {
 		}
 		
 	}
+	
+	@GetMapping("/mostrar/{id}")
+	public String showUser(@PathVariable("id") Long id,
+						   Model model) {
+		
+		//obtenemos un obj usuario en base al método del servicio que hicimos
+		Usuario esteEsUsuario = servicio.findUsuario(id);
+		
+		//model.addAttribute("usuario", user);
+		model.addAttribute("persona", esteEsUsuario);
+		
+		return "mostrar.jsp";
+	}
+	
+	@DeleteMapping("/borrar/{id}")
+	public String borrarUsuario(@PathVariable("id") Long id) {
+		servicio.deleteUsuario(id);
+		return "redirect:/dashboard";
+	}
+	
+	@GetMapping("/editar/{id}") // /editar/1
+	public String editarUsuario(@PathVariable("id") Long id,
+								@ModelAttribute("usuario") Usuario usuario,
+								Model model) {
+		
+		//Objeto de usuario al que pertenece el id de la ruta
+		Usuario usuarioEdit = servicio.findUsuario(id);
+		
+		//model.addAttribute("usuario", usuarioEdit);
+		model.addAttribute("usuario", usuarioEdit);
+		
+		return "editar.jsp";
+	}
+	
+	@PutMapping("/update/{id}")
+	public String updateUsuario(@Valid @ModelAttribute("usuario") Usuario usuario,
+								BindingResult result) {
+		if(result.hasErrors()) {
+			return "editar.jsp";
+		} else {
+			servicio.saveUsuario(usuario);
+			return "redirect:/dashboard";
+		}
+	}
+	
 	
 }
