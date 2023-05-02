@@ -10,14 +10,18 @@
 </head>
 <body>
 	<div class="container">
-		<h1>¡Bienvenid@ ${username} a tu Dashboard! </h1>
-		<a href="/new" class="btn btn-success">Agregar Usuario</a>
+		<div class="d-flex justify-content-between align-items-center">
+			<h1>¡Bienvenid@ ${username} a tu Dashboard! </h1>
+			<a href="/new" class="btn btn-success">Agregar Usuario</a>
+			<a href="/direcciones/nueva" class="btn btn-primary">Agregar Dirección</a>
+		</div>
 		<table class="table table-hover">
 			<thead>
 				<tr>	
 					<th>Nombre</th>
 					<th>Apellido</th>
 					<th>Email</th>
+					<th>Dirección</th>
 					<th>Acciones</th>
 				</tr>
 			</thead>
@@ -32,6 +36,7 @@
 						<td>${usuario.firstName}</td>
 						<td>${usuario.lastName}</td>
 						<td>${usuario.email}</td>
+						<td>${usuario.direccion.calle} ${usuario.direccion.numero}</td>
 						<td>
 							<a href="/mostrar/${usuario.id}" class="btn btn-info">Mostrar</a>
 							<form action="/borrar/${usuario.id}" method="post">

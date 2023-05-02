@@ -22,4 +22,7 @@ public interface RepositorioUsuarios extends CrudRepository<Usuario, Long> {
 	
 	//SELECT * FROM usuarios WHERE first_name LIKE '<nombre>%';
 	List<Usuario> findByFirstNameStartingWith(String nombre);
+	
+	//Regrese los usuarios que NO tienen dirección
+	List<Usuario> findByDireccionIdIsNull();
 }
