@@ -33,6 +33,18 @@
 				<form:password path="password" class="form-control"/>
 				<form:errors path="password" class="text-danger" />
 			</div>
+			<div>
+				<form:label path="salon">Salón</form:label>
+				<form:select path="salon" class="form-select">
+					<!-- salones = LIST(obj(Java), obj(pythhon), obj(mern)
+					salon = obj(java)
+					 -->
+					<c:forEach items="${salones}" var="salon">
+						<form:option value="${salon.id}">${salon.nombre}</form:option>
+					</c:forEach>
+				</form:select>
+				<form:errors path="salon" class="text-danger" />
+			</div>
 			<input type="submit" value="Guardar" class="btn btn-success mt-3" >
 		</form:form>
 	</div>

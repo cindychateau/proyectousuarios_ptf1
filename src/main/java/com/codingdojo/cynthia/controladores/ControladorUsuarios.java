@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.codingdojo.cynthia.modelos.Salon;
 import com.codingdojo.cynthia.modelos.Usuario;
 import com.codingdojo.cynthia.servicios.Servicios;
 
@@ -106,15 +107,25 @@ public class ControladorUsuarios {
 	}
 	
 	@GetMapping("/new")
-	public String newUser(@ModelAttribute("usuario") Usuario usuario) {
+	public String newUser(@ModelAttribute("usuario") Usuario usuario,
+						  Model model) {
+		
+		List<Salon> salones = servicio.encuentraSalones();
+		//model.addAttribute("salones", salones);
+		model.addAttribute("salones", salones);
+		
 		return "new.jsp";
 	}
 	
 	@PostMapping("/create") //@Valid me permite validar la info del objeto usuario
 	public String createUser(@Valid @ModelAttribute("usuario") Usuario usuario,
-							 BindingResult result /*Encargado de mensajes de valid*/) {
+							 BindingResult result /*Encargado de mensajes de valid*/,
+							 Model model) {
 		
 		if(result.hasErrors()) {
+			List<Salon> salones = servicio.encuentraSalones(); //variable que tiene lista de usuarios
+			//model.addAttribute("salones", salones);
+			model.addAttribute("salones", salones); //enviamos a jsp
 			return "new.jsp";
 		}else {
 			servicio.saveUsuario(usuario);
@@ -153,13 +164,20 @@ public class ControladorUsuarios {
 		//model.addAttribute("usuario", usuarioEdit);
 		model.addAttribute("usuario", usuarioEdit);
 		
+		//model.addAttribute("salones", servicio.encuentraSalones());
+		model.addAttribute("salones", servicio.encuentraSalones());
+		
+		
 		return "editar.jsp";
 	}
 	
 	@PutMapping("/update/{id}")
 	public String updateUsuario(@Valid @ModelAttribute("usuario") Usuario usuario,
-								BindingResult result) {
+								BindingResult result,
+								Model model) {
 		if(result.hasErrors()) {
+			//model.addAttribute("salones", servicio.encuentraSalones());
+			model.addAttribute("salones", servicio.encuentraSalones());
 			return "editar.jsp";
 		} else {
 			servicio.saveUsuario(usuario);
