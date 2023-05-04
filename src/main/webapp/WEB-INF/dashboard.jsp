@@ -47,6 +47,7 @@
 								<input type="submit" value="Borrar" class="btn btn-danger" >
 							</form>
 							<a href="/editar/${usuario.id}" class="btn btn-warning">Editar</a>
+							<a href="/asignar/${usuario.id}" class="btn btn-primary">Asignar Hobbies</a>
 						</td>
 					</tr>
 				</c:forEach>

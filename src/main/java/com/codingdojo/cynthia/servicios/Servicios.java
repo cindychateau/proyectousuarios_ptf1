@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.codingdojo.cynthia.modelos.Direccion;
+import com.codingdojo.cynthia.modelos.Hobby;
 import com.codingdojo.cynthia.modelos.Salon;
 import com.codingdojo.cynthia.modelos.Usuario;
 import com.codingdojo.cynthia.repositorios.RepositorioDirecciones;
+import com.codingdojo.cynthia.repositorios.RepositorioHobbies;
 import com.codingdojo.cynthia.repositorios.RepositorioSalones;
 import com.codingdojo.cynthia.repositorios.RepositorioUsuarios;
 
@@ -23,6 +25,19 @@ public class Servicios {
 	
 	@Autowired
 	private RepositorioSalones repoSalones;
+	
+	@Autowired
+	private RepositorioHobbies repoHobbies;
+	
+	/*
+	 private final RepositorioHobbies repoHobbies;
+	 
+	 public Servicio(RepositorioHobbies repoHobbies){
+	 	this.repoHobbies = repoHobbies
+	 }
+	 
+	 */
+	
 	
 	//Me regresa una lista con todos los usuarios
 	public List<Usuario> findUsuarios() {
@@ -58,6 +73,43 @@ public class Servicios {
 	//Regrese una lista de salones
 	public List<Salon> encuentraSalones() {
 		return repoSalones.findAll();
+	}
+	
+	//Regresa una lista de hobbies
+	public List<Hobby> encuentraHobbies() {
+		return repoHobbies.findAll();
+	}
+	
+	//Regresa un hobby en base a su ID
+	public Hobby encuentraUnHobby(Long id) {
+		return repoHobbies.findById(id).orElse(null);
+	}
+	/*
+	 * usuario_id = 1
+	 * hobby_id = 4
+	 *
+	 * miUsuario = Obj(Elena)
+	 * miHobby = Obj(Tocar el Piano)
+	 * 
+	 * listaHobbies = {"Leer"}
+	 * listaHobbies = {"Leer", "Tocar el Piano"}
+	 * 
+	 * Guardamos a Elena
+	 *
+	 */
+	public void guardarUsuarioHobby(Long usuario_id, Long hobby_id) {
+		//Obtenemos el objeto de usuario al que queremos agregar el hobby
+		Usuario miUsuario = findUsuario(usuario_id);
+		
+		//Obtenemos el objeto de hobby
+		Hobby miHobby = encuentraUnHobby(hobby_id);
+		
+		//Lista de Hobbies del usuario
+		List<Hobby> listaHobbies = miUsuario.getHobbies();
+		listaHobbies.add(miHobby);
+		
+		repoUsuarios.save(miUsuario); //Actualizando
+		
 	}
 	
 }
