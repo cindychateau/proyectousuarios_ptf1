@@ -43,8 +43,20 @@ public class ControladorHobbies {
 	public String asignarHobby(@RequestParam("usuario_id") Long usuario_id,
 							   @RequestParam("hobby_id") Long hobby_id) {
 		
-		//Pendiente llamar a método del servicio que hace la asignación
+		//llamar a método del servicio que hace la asignación
+		servicio.guardarUsuarioHobby(usuario_id, hobby_id);
+		return "redirect:/dashboard";
 		
+	}
+	
+	@PostMapping("/quitarHobby")
+	public String quitarHobby(@RequestParam("usuario_id") Long usuario_id,
+							  @RequestParam("hobby_id") Long hobby_id) {
+		
+		//Llamar a método del servicio que quite el hobby de la lista
+		servicio.quitarUsuarioHobby(usuario_id, hobby_id);
+		
+		return "redirect:/dashboard";
 	}
 	
 }

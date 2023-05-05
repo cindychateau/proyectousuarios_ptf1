@@ -23,6 +23,7 @@
 					<th>Email</th>
 					<th>Dirección</th>
 					<th>Salón</th>
+					<th>Hobbies</th>
 					<th>Acciones</th>
 				</tr>
 			</thead>
@@ -39,6 +40,13 @@
 						<td>${usuario.email}</td>
 						<td>${usuario.direccion.calle} ${usuario.direccion.numero}</td>
 						<td>${usuario.salon.nombre} - ${usuario.salon.id}</td>
+						<td>
+							<ul>
+								<c:forEach items="${usuario.hobbies}" var="h">
+									<li>${h.actividad}</li>
+								</c:forEach>
+							</ul>
+						</td>
 						<td>
 							<a href="/mostrar/${usuario.id}" class="btn btn-info">Mostrar</a>
 							<form action="/borrar/${usuario.id}" method="post">

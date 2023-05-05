@@ -24,11 +24,20 @@
 					<tr>
 						<td>${hobby.actividad}</td>
 						<td>
-							<form action="/asignarHobby" method="post">
-								<input type="hidden" name="usuario_id" value="${usuario.id}">
-								<input type="hidden" name="hobby_id" value="${hobby.id}">
-								<input type="submit" value="Asignar Hobby" class="btn btn-primary">
-							</form>
+							<c:if test="${usuario.hobbies.contains(hobby)}">
+								<form action="/quitarHobby" method="post">
+									<input type="hidden" name="usuario_id" value="${usuario.id}">
+									<input type="hidden" name="hobby_id" value="${hobby.id}">
+									<input type="submit" value="Quitar Hobby" class="btn btn-danger">
+								</form>
+							</c:if>
+							<c:if test="${not usuario.hobbies.contains(hobby)}">
+								<form action="/asignarHobby" method="post">
+									<input type="hidden" name="usuario_id" value="${usuario.id}">
+									<input type="hidden" name="hobby_id" value="${hobby.id}">
+									<input type="submit" value="Asignar Hobby" class="btn btn-primary">
+								</form>
+							</c:if>
 						</td>
 					</tr>
 				</c:forEach>

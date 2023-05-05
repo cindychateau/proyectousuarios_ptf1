@@ -108,8 +108,37 @@ public class Servicios {
 		List<Hobby> listaHobbies = miUsuario.getHobbies();
 		listaHobbies.add(miHobby);
 		
+		/*
+		 * List<Usuario> listaUsuarios = miHobby.getUsuarios();
+		 * listaUsuarios.add(miUsuario);
+		 * repoHobbies.save(miHobby);
+		 */
+		
 		repoUsuarios.save(miUsuario); //Actualizando
 		
+	}
+	/*
+	 * usuario_id = 6
+	 * hobby_id = 1
+	 * miUsuario = obj(Pablo Picasso)
+	 * miHobby = obj(Leer)
+	 * listaHobbies = {Leer, Pintar}
+	 * listaHobbies = {Pintar}
+	 * Guardo miUsuario
+	 * 
+	 */
+	public void quitarUsuarioHobby(Long usuario_id, Long hobby_id) {
+		//Obtenemos el objeto de usuario al que queremos quitar el hobby
+		Usuario miUsuario = findUsuario(usuario_id);
+		
+		//Obtenemos el objeto de hobby
+		Hobby miHobby = encuentraUnHobby(hobby_id);
+		
+		//Lista de Hobbies del usuario
+		List<Hobby> listaHobbies = miUsuario.getHobbies();
+		listaHobbies.remove(miHobby);
+		
+		repoUsuarios.save(miUsuario);
 	}
 	
 }
